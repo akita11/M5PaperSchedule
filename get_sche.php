@@ -32,7 +32,7 @@ $t = time();
 //$t2 = $t + 4* 7 * 24 * 60 * 60; // 1 month
 $t2 = $t + 7 * 24 * 60 * 60; // 1 week
 
-$calendarId = 'akita@ifdl.jp';
+$calendarId = '****'; // your calendar ID
 $optParams = array(
   'maxResults' => 100,
   'orderBy' => 'startTime',
