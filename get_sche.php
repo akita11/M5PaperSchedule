@@ -28,7 +28,7 @@ if ($client->getAuth()->isAccessTokenExpired()) {
 $service = new Google_Service_Calendar($client);
  
 // ここでデータを取得する範囲を決めています
-$t = intval(time() /(24*60*60)) * 24*60*60 - 9*60*60; // 当日の00:00(JST)
+$t = intval((time() + 9*60*60) /(24*60*60)) * 24*60*60 - 9*60*60; // 当日の00:00(JST)
 $t2 = $t + 7 * 24 * 60 * 60; // next 7 days
 
 $calendarId = '****'; // your calendar ID
@@ -49,7 +49,7 @@ echo "{\"data\":[";
 for ($d = 0; $d < 7; $d++){
   echo $delim0;
   echo "{";
-  $ttime = intval(time() /(24*60*60)) * 24*60*60 - 9 * 60*60 + $d * 24 * 60 * 60; // 対象日の00:00(JST)
+  $ttime = intval((time() + 9*60*60) /(24*60*60)) * 24*60*60 - 9 * 60*60 + $d * 24 * 60 * 60; // 対象日の00:00(JST)
   echo "\"date\":";
   echo "\"".date("Y/m/d(D)", $ttime)."\",";
   echo "\"item\":[";
@@ -67,7 +67,7 @@ for ($d = 0; $d < 7; $d++){
         echo "\"start\":\"".substr($item->start->dateTime,11,5)."\",";
         echo "\"end\":\"".substr($item->end->dateTime,11,5)."\",";
         echo "\"summary\":\"".$item->summary."\",";
-        echo "\"description\":\"".$item->description."\"";
+        echo "\"description\":\"".addslashes($item->description)."\"";
         echo "}";
         $delim = ',';
     }
@@ -78,7 +78,7 @@ for ($d = 0; $d < 7; $d++){
         echo "\"start\":\"[終日]\",";
         echo "\"end\":\"\",";
         echo "\"summary\":\"".$item->summary."\",";
-        echo "\"description\":\"".$item->description."\"";
+        echo "\"description\":\"".addslashes($item->description)."\"";
         echo "}";
         $delim = ',';
      }
